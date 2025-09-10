@@ -8,6 +8,7 @@ cursor.execute('''
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         brand_name TEXT,
         model_name TEXT,
+        client_name TEXT,
         series_num TEXT,
         license_plate TEXT,
         hour_meter TEXT,
@@ -20,6 +21,7 @@ cursor.execute('''
 def main():
     brand_name = ''
     model_name = ''
+    client_name = ''
     series_num = ''
     license_plate = ''
     hour_meter = ''
@@ -35,6 +37,7 @@ def main():
         if brand_name.lower() == 'exit':    
             break
         model_name = input("Model Name: ")
+        client_name = input("Qual o cliente: ")
         series_num = input("Series Number: ")
         license_plate = input("License Plate: ")
         hour_meter = input("Hour Meter: ")
@@ -45,6 +48,7 @@ def main():
         machine_list.append({
             'brand_name': brand_name,
             'model_name': model_name,
+            'client_name': client_name,
             'series_num': series_num,
             'license_plate': license_plate,
             'hour_meter': hour_meter,
@@ -52,7 +56,7 @@ def main():
             'service_done': service_done
         })
         # Insert the service details into the database
-        cursor.execute("INSERT INTO services (brand_name, model_name, series_num, license_plate, hour_meter, service_date, service_done, machine_list) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (brand_name, model_name, series_num, license_plate, hour_meter, service_date, service_done, json.dumps(machine_list)))
+        cursor.execute("INSERT INTO services (brand_name, model_name,client_name, series_num, license_plate, hour_meter, service_date, service_done, machine_list) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", (brand_name, model_name, client_name, series_num, license_plate, hour_meter, service_date, service_done, json.dumps(machine_list)))
         conn.commit()
         add_another = input("Do you want to add another machine? (yes/no): ")
         if add_another.lower() != 'yes':

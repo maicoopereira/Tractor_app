@@ -4,6 +4,8 @@ import model.machines as machines
 import controller.databaseCursor as db
 
 
+
+
 #Create a file to connect to the database
 #create objects, for the machines, services, clients, technicians, expendables
 #use the main file to run the program
@@ -20,6 +22,8 @@ import controller.databaseCursor as db
 #than we can create a graphical user interface using tkinter or pyqt
 #the database will be sqlite3
 #the objects will be stored in the database
+
+
 
 
 
@@ -56,10 +60,17 @@ def main():
         database = input("Enter the database name (or type 'exit' to quit): ")
         if database.lower() == 'exit':
             break
+        database = database.lower if database.endswith('.db') else database + '.db'
+        database = 'data/machines.db'  #default database
+        #create a database connection
+        print(f"Using database: {database}")
+        print("Creating database connection...")
+        print("..." * 10)
         db_cursor = db.DatabaseCursor(database)
         db_cursor.set_database(database)
         
         #create a machine object
+        print("..." * 10)
         brand_name = input("Brand Name or type exit to quit: ")
         if brand_name.lower() == 'exit':    
             break
@@ -74,7 +85,15 @@ def main():
         
         
         new_machine.display_details()
-        
+ 
+        confirmation = input("Are these details correct? (yes/no): ")
+        if confirmation.lower() == 'yes':
+            print("Details confirmed.")
+            new_machine.add_to_database(db_cursor)
+        else:
+            print("Details discarded. Please re-enter the information.")
+            
+        # Insert the service details into the database
         
 
         #  # Append the service details to the list

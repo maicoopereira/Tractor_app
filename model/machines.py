@@ -71,6 +71,10 @@ class Machines:
     def set_service_done(self, service_done):
         self.service_done = service_done
     
+    def add_to_database(self, db_cursor):
+        db_cursor.execute("INSERT INTO services (brand_name, model_name,client_name, series_num, license_plate, hour_meter, service_date, service_done) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", (self.brand_name, self.model_name, self.client_name, self.series_num, self.license_plate, self.hour_meter, self.service_date, self.service_done))
+        print("Machine details added to the database.")
+    
         
         
 if __name__ == '__main__':
